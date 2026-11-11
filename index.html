@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Max Control — Artes & Feriados</title>
+<meta name="theme-color" content="#c4c4c8">
+<meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icons/icon-192.png"><link rel="apple-touch-icon" href="icons/icon-192.png">
+<link rel="stylesheet" href="style.css?v=2">
+</head>
+<body>
+<div class="splash" id="splash"><img src="logo.png" alt="Max Control"></div>
+<div class="backdrop" aria-hidden="true"><i></i><i></i><i></i></div>
+<div class="frame"><div class="shell">
+  <aside class="sidebar">
+    <a class="side-logo" href="#top" aria-label="Max Control"><img class="logo" src="logo.png" alt="Max Control — Artes & Feriados"></a>
+    <nav class="side-nav" aria-label="Seções">
+      <a class="active" href="#painel"><svg class="si" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.6"/><rect x="14" y="3" width="7" height="7" rx="1.6"/><rect x="3" y="14" width="7" height="7" rx="1.6"/><rect x="14" y="14" width="7" height="7" rx="1.6"/></svg><span>Painel</span></a>
+      <a href="#campanhas"><svg class="si" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="3"/><path d="M8 3v4M16 3v4M3.5 10h17"/></svg><span>Campanhas</span></a>
+      <a href="#clientes"><svg class="si" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.4"/><path d="M2.5 20c.6-3.6 3.2-5.6 6.5-5.6s5.9 2 6.5 5.6M16 4.8a3.4 3.4 0 0 1 0 6.4M18 14.6c1.9.7 3.2 2.5 3.5 5.4"/></svg><span>Clientes</span></a>
+      <a href="#backup"><svg class="si" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 3h11l3 3v15H5Z"/><path d="M8 3v5h7V3M8 21v-7h8v7"/></svg><span>Backup</span></a>
+    </nav>
+    <div class="side-title">Categorias</div>
+    <div class="cats" id="cats"></div>
+    <div class="side-foot"><a href="#backup" id="catManage" role="button"><svg class="si" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 21v-7M4 10V3M12 21v-9M12 8V3M20 21v-5M20 12V3M1 14h6M9 8h6M17 16h6"/></svg><span>Gerenciar categorias</span></a></div>
+  </aside>
+  <div class="main" id="top">
+    <header class="topbar">
+      <div><h1>Olá, Dagner!</h1><button type="button" class="saved" id="savedPill" data-s="local"><i></i><span></span></button></div>
+      <div class="top-actions">
+        <button type="button" class="btn-dark js-create"><svg class="si" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg><span>Nova campanha</span></button>
+        <button type="button" class="round" id="accountBtn" title="Conta e sincronização" aria-label="Conta e sincronização"><svg class="si" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c.8-4 4-6 8-6s7.2 2 8 6"/></svg></button>
+        <button type="button" class="round" id="searchBtn" title="Buscar cliente ( / )" aria-label="Buscar cliente"><svg class="si" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg></button>
+        <button type="button" class="round" id="printTop" title="Imprimir / PDF" aria-label="Imprimir ou salvar em PDF"><svg class="si" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 9V3h10v6M7 17H4v-7h16v7h-3M7 14h10v7H7Z"/></svg></button>
+      </div>
+    </header>
+
+    <section class="hero" aria-label="Campanha ativa">
+      <div><small>Campanha ativa</small><h2 id="heroName"></h2><div class="hero-meta" id="heroMeta"></div></div>
+      <div class="hero-actions">
+        <button type="button" id="renameCampaignBtn">Editar</button>
+        <button type="button" id="dupCampaignBtn">Duplicar</button>
+        <button type="button" id="exportCsvBtn">Baixar CSV</button>
+        <button type="button" id="deleteCampaignBtn" title="Exclui só a campanha e suas marcações, não os clientes">Excluir</button>
+      </div>
+    </section>
+
+    <section class="dash" id="painel" aria-label="Resumo">
+      <article class="card dark overview">
+        <h2>Visão geral</h2>
+        <div class="bignums">
+          <div><strong id="bigDone">0</strong><span>clientes prontos<br>nesta campanha</span></div>
+          <i class="vr"></i>
+          <div><strong id="bigCamps">0</strong><span>campanhas<br>criadas</span></div>
+        </div>
+        <div class="progress" role="progressbar" aria-label="Progresso"><span id="progressFill"></span></div>
+        <div class="tiles">
+          <div class="tile t1"><strong id="total">0</strong><span>No total</span></div>
+          <div class="tile"><strong id="finished">0</strong><span>Prontas</span></div>
+          <div class="tile"><strong id="remaining">0</strong><span>Faltam</span></div>
+        </div>
+      </article>
+      <article class="card glass chart">
+        <h2>Progresso por campanha</h2>
+        <ul class="legend" id="legend"></ul>
+        <div id="chartBox" class="chart-box"></div>
+      </article>
+      <article class="card white ring">
+        <h2>Esta campanha</h2>
+        <p class="campaign-current-sub">Clientes “fora” não entram na conta.</p>
+        <div class="ring-row"><ul class="ring-legend" id="ringLegend"></ul><div class="ring-box" id="ringBox"></div></div>
+      </article>
+    </section>
+
+    <section class="card glass holidays" aria-label="Próximas datas">
+      <div class="sec-head"><h2>Próximas datas comemorativas</h2><span>Toque em “Criar” para abrir a campanha já com a data.</span></div>
+      <div class="hscroll" id="holidayList"></div>
+    </section>
+
+    <section class="row2">
+      <article class="card white newclient">
+        <h2>Novo cliente</h2>
+        <p class="hint">Entra em todas as campanhas, já como pendente.</p>
+        <form class="add" id="addForm">
+          <input id="newName" maxlength="100" placeholder="Nome do novo cliente" aria-label="Novo nome" required>
+          <select id="newCategory" aria-label="Categoria"></select>
+          <button class="btn-dark" type="submit"><svg class="si" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg><span>Adicionar</span></button>
+        </form>
+        <div class="dsbtns"><button type="button" class="ghost" id="dsPullBtn">Atualizar do DS Gestão</button><button type="button" class="ghost" id="linkBtn">Vincular clientes</button></div>
+      </article>
+      <section class="camps" id="campanhas" aria-label="Campanhas">
+        <div class="sec-head"><h2>Minhas campanhas</h2><span>Todos os clientes em cada campanha, com marcações separadas.</span></div>
+        <div class="campaign-tabs" id="campaignTabs" role="tablist" aria-label="Escolha a campanha"></div>
+      </section>
+    </section>
+
+    <main class="list" id="clientes">
+      <div class="print-only" id="printMeta"></div>
+      <div class="sec-head wide">
+        <h2 id="listTitle">Lista de produção</h2>
+        <span class="right">
+          <span id="shownCount">0 clientes</span>
+          <button class="linkbtn" id="selectVisible" type="button">Selecionar visíveis</button>
+          <button class="list-toggle" id="toggleClientList" type="button" aria-controls="items" aria-expanded="true"><span id="toggleClientListIcon" aria-hidden="true">⌃</span><span id="toggleClientListText">Recolher lista</span></button>
+        </span>
+      </div>
+      <div class="controls">
+        <div class="search"><input id="search" type="search" placeholder="Buscar cliente…  ( / )" aria-label="Buscar"></div>
+        <div class="seg" id="catPills" role="group" aria-label="Filtrar categoria"></div>
+        <select id="statusSel" aria-label="Status"><option value="todos">Todos os status</option><option value="pend">Pendentes</option><option value="pronta">Prontas</option><option value="atras">Atrasadas</option><option value="fora">Fora da campanha</option></select>
+        <select id="sortSel" aria-label="Ordem"><option value="az">A–Z</option><option value="za">Z–A</option><option value="pend">Pendentes primeiro</option><option value="prazo">Por prazo</option></select>
+      </div>
+      <div id="items" class="tickets"></div>
+    </main>
+
+    <footer class="footer card glass" id="backup">
+      <div class="backup-status" id="backupStatus"><span class="dot"></span><span id="backupText"></span></div>
+      <div class="tools">
+        <button class="ghost" id="printBtn">Imprimir / PDF</button>
+        <button class="ghost" id="backupBtn">Fazer backup</button>
+        <button class="ghost" id="restoreBtn">Restaurar backup</button>
+        <button class="ghost danger" id="clearMarksBtn">Limpar marcações</button>
+      </div>
+    </footer>
+    <input type="file" id="restoreFile" accept=".json,application/json" class="hidden">
+  </div>
+</div></div>
+
+<dialog class="mc-dlg" id="campDialog"><form id="campForm">
+  <h2 id="campTitle">Criar campanha</h2><p id="campHint"></p>
+  <label for="campName">Nome da campanha</label><input id="campName" type="text" maxlength="70" required autocomplete="off" placeholder="Ex.: Dia das Mães 2027">
+  <label for="campDate">Data do feriado (opcional)</label><input id="campDate" type="date">
+  <label class="chk hidden" id="dupRow"><input type="checkbox" id="keepOut" checked> Manter quem está “fora” desta campanha</label>
+  <div class="dlg-act"><button type="button" data-close>Cancelar</button><button type="submit" class="pri" id="campSave">Criar campanha</button></div>
+</form></dialog>
+
+<dialog class="mc-dlg" id="markDialog"><form id="markForm">
+  <h2>Prazo e observação</h2><p id="markWho"></p>
+  <label for="markDue">Entrega combinada</label><input id="markDue" type="date">
+  <label for="markNote">Observação</label><textarea id="markNote" rows="3" maxlength="300" placeholder="Ex.: pediu fundo azul, aguardando foto…"></textarea>
+  <label class="chk"><input type="checkbox" id="markOut"> Não participa desta campanha</label>
+  <div class="dlg-act"><button type="button" data-close>Cancelar</button><button type="submit" class="pri">Salvar</button></div>
+</form></dialog>
+
+<dialog class="mc-dlg" id="catDialog"><div class="box">
+  <h2>Categorias</h2><p>Renomeie, exclua ou crie categorias. Clientes de uma categoria excluída passam para outra.</p>
+  <div id="catEdit" style="display:flex;flex-direction:column;gap:8px"></div>
+  <form id="catAdd" style="display:flex;gap:8px"><input id="catNew" type="text" maxlength="30" placeholder="Nova categoria" style="flex:1"><button class="pri" type="submit" style="height:46px;border-radius:999px;padding:0 20px;border:0;background:var(--ink);color:#fff;font-weight:600">Criar</button></form>
+  <div class="dlg-act"><button type="button" data-close>Fechar</button></div>
+</div></dialog>
+
+<dialog class="mc-dlg" id="syncDialog"><div class="box sync-box">
+  <h2>Conta e sincronização</h2>
+  <div id="syOff"><p>Use o mesmo e-mail e senha do DS Gestão. Isso sincroniza campanhas e marcações entre aparelhos e lê seus clientes.</p>
+    <form id="fSync" style="display:flex;flex-direction:column;gap:10px;margin-top:10px">
+      <label for="sUrl">URL do Supabase</label><input id="sUrl" type="url" placeholder="https://xxxx.supabase.co" autocomplete="off">
+      <label for="sKey">Chave pública (anon)</label><input id="sKey" type="text" autocomplete="off">
+      <label for="sMail">E-mail</label><input id="sMail" type="email" autocomplete="username">
+      <label for="sPass">Senha</label><input id="sPass" type="password" autocomplete="current-password">
+      <p id="syMsg"></p>
+      <div class="dlg-act"><button type="button" data-close>Fechar</button><button type="submit" class="pri" id="syBtn">Entrar</button></div>
+    </form></div>
+  <div id="syOn" class="hidden"><p id="syInfo"></p>
+    <div class="dlg-act"><button type="button" id="syOut">Sair</button><button type="button" id="syNow">Sincronizar agora</button><button type="button" class="pri" data-close>Fechar</button></div></div>
+</div></dialog>
+
+<dialog class="mc-dlg" id="linkDialog"><div class="box">
+  <h2>Vincular clientes</h2><p id="linkCount"></p><div id="linkBody"></div>
+  <div class="dlg-act"><button type="button" id="linkSkip">Agora não</button><button type="button" class="pri" id="linkApply">Aplicar</button></div>
+</div></dialog>
+
+<div class="bulkbar hidden" id="bulkbar">
+  <span id="bulkCount">0 selecionados</span>
+  <div class="bulk-actions">
+    <button class="bbtn" data-bulk="done">Prontas</button><button class="bbtn" data-bulk="pending">Pendentes</button>
+    <button class="bbtn" data-bulk="out">Fora</button><button class="bbtn" data-bulk="in">Participa</button>
+    <select class="bbtn" id="bulkCat" aria-label="Mudar categoria" style="background:transparent;color:#fff"></select>
+    <button class="bbtn danger" data-bulk="delete">Excluir</button><button class="bbtn" data-bulk="clear">Limpar</button>
+  </div>
+</div>
+<div id="printDoc" class="print-doc" aria-hidden="true"></div>
+<div class="toasts" id="toasts" aria-live="polite"></div>
+<script src="app.js?v=2"></script>
+</body>
+</html>

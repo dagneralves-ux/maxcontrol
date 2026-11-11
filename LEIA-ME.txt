@@ -1,0 +1,9 @@
+MAX CONTROL v2 - Artes & Feriados (PWA)
+
+1) SUPABASE (uma vez): abra o SQL Editor do mesmo projeto do DS Gestao e rode Supabase_maxcontrol.sql.
+2) HOSPEDAR: suba TODA a pasta (index.html, style.css, app.js, sw.js, manifest.json, logo.png, icons/, fonts/) no GitHub Pages ou Netlify. Caminhos relativos: funciona em subpasta.
+3) ENTRAR: botao de pessoa (ou o selo "Salvo neste dispositivo") > URL do Supabase, chave anon, e-mail e senha do DS Gestao.
+4) CLIENTES: "Atualizar do DS Gestao" le a tabela clientes (nome e logo). Na primeira vez abre "Vincular clientes" para casar nomes diferentes. Categorias ficam so aqui.
+5) DADOS ANTIGOS: migram sozinhos so no mesmo endereco do arquivo antigo. Senao, use Restaurar backup (aceita v1, v4 e v5).
+
+ATALHOS: / busca | N novo cliente | C nova campanha | Enter no cartao marca pronta | Ctrl+Z desfaz.
